@@ -27,4 +27,7 @@ export class ListComponent {
       price: 300,
     },
   ];
+  addToCardListener(value: string) {
+    console.log(`Evento escuchado desde el padre: ${value}`);
+  }
 }
