@@ -20,6 +20,12 @@ export class CounterComponent {
     // before and during the render
     console.log('onChanges', changes);
     console.log('-'.repeat(10));
+    if (
+      changes.hasOwnProperty('duration') &&
+      changes['duration'].previousValue !== changes['duration'].currentValue
+    ) {
+      this.doSomething();
+    }
   }
   ngOnInit() {
     // se ejecuta una sola vez después de ngOnChanges
@@ -42,5 +48,8 @@ export class CounterComponent {
      */
     console.log('ngOnDestroy method');
     console.log('-'.repeat(10));
+  }
+  doSomething() {
+    console.log('Something on duration change');
   }
 }
