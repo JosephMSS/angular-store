@@ -15,4 +15,8 @@ export class AboutComponent {
     const input = event.target as HTMLInputElement;
     this.duration.update((_state) => input.valueAsNumber);
   }
+  changeMessageHandler(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.message.update((_state) => input.value);
+  }
 }
