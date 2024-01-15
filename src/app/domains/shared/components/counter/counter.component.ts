@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  SimpleChange,
+  SimpleChanges,
+  signal,
+} from '@angular/core';
 
 @Component({
   selector: 'app-counter',
@@ -10,6 +16,8 @@ import { Component, Input, SimpleChange, SimpleChanges } from '@angular/core';
 export class CounterComponent {
   @Input({ required: true }) duration = 0;
   @Input({ required: true }) message = '';
+  counter = signal(0);
+  intervalRef: undefined | number = undefined;
   constructor() {
     // no async
     //before render
@@ -32,6 +40,11 @@ export class CounterComponent {
     // es donde podemos ejecutar todo el código asíncrono que necesitemos
     console.log('OnInit method');
     console.log('-'.repeat(10));
+    this.intervalRef = window.setInterval(() => {
+      console.log('counter', this.counter());
+
+      this.counter.update((state) => state + 1);
+    }, 1000);
   }
   ngAfterViewInit() {
     /**
@@ -44,10 +57,11 @@ export class CounterComponent {
     /**
      * Se ejecuta cuando se desmonta el componente,
      * se usa generalmente para eliminar suscripciones
-     *  o detener eventos asíncronos
+     *  o detener eventos asíncronos suscripciones a webosockets o  a metodos de rxjs
      */
     console.log('ngOnDestroy method');
     console.log('-'.repeat(10));
+    window.clearInterval(this.intervalRef);
   }
   doSomething() {
     console.log('Something on duration change');
